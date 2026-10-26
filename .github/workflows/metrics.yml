@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
+  push:
+    branches: [main] # Regenerate whenever the default branch changes
 
 permissions:
   contents: write
@@ -15,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate Metrics SVG
-        uses: lowlighter/metrics@latest
+        uses: lowlighter/metrics@v3.34
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           filename: metrics.svg
