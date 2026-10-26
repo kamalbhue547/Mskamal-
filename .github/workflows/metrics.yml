@@ -16,17 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # lowlighter/metrics generates metrics.svg AND commits/pushes it itself
+      # (committer_token defaults to github.token). No separate commit step needed.
       - name: Generate Metrics SVG
         uses: lowlighter/metrics@v3.34
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           filename: metrics.svg
           base: header, activity, community, repositories
-
-      - name: Commit and Push
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add metrics.svg
-          git diff --cached --quiet || git commit -m "chore: update metrics"
-          git push
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          committer_branch: main
+          committer_message: "chore: update metrics"
