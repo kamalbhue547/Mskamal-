@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: "0 0 * * *" # Runs daily at midnight UTC
   workflow_dispatch: # Lets you run it manually
+  push:
+    branches: [main] # Keep the snake in sync with the contribution graph
 
 permissions:
   contents: write # Required to push files
